@@ -51,7 +51,7 @@ html, body {
 
 #clock {
   color: #fff;
-  font-size: clamp(100px, 15vw, 200px);
+  font-size: clamp(150px, min(15vw, 28vh), 220px);
   line-height: 0.95;
   font-weight: 400;
   letter-spacing: 0;
@@ -141,7 +141,7 @@ html, body {
 /* KISA EKRANLAR */
 @media (max-height: 700px) {
   #clock {
-    font-size: clamp(100px, 30vh, 200px);
+    font-size: 240px;
   }
 
   #day {
@@ -166,7 +166,7 @@ html, body {
 /* ÇOK DAR / DÜŞÜK ÇÖZÜNÜRLÜK */
 @media (max-height: 500px) {
   #clock {
-    font-size: clamp(80px, 24vh, 160px);
+    font-size: 190px;
   }
 
   #day {
@@ -188,6 +188,8 @@ html, body {
     font-size: 13px;
   }
 }
+
+
 </style>
 </head>
 
