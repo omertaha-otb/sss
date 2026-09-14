@@ -19,8 +19,7 @@ html, body {
   min-height: 0;
   overflow: hidden;
   background: #000;
-  font-family: Arial, sans-serif;
-
+  font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
   user-select: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -28,7 +27,6 @@ html, body {
   pointer-events: none;
 }
 
-/* SAAT + TARİH: HER EKRANDA TAM ORTA */
 #main {
   position: fixed;
   inset: 0;
@@ -44,53 +42,54 @@ html, body {
 #clockArea {
   width: 100%;
   max-width: 100%;
-  padding: 0 20px;
+  padding: 0 clamp(12px, 3vw, 40px);
   text-align: center;
   overflow: hidden;
 }
 
 #clock {
   color: #fff;
-  font-size: 80px;
-  line-height: 0.95;
-  font-weight: 400;
-  letter-spacing: 0;
+  font-size: clamp(56px, 6vw + 7vh, 260px);
+  line-height: 1;
+  font-weight: 500;
+  letter-spacing: 0.02em;
   white-space: nowrap;
-  text-shadow: 3px 3px 10px #000;
+  text-shadow: 3px 3px 12px #000;
+  font-variant-numeric: tabular-nums;
 }
 
 #day {
-  margin-top: 10px;
+  margin-top: clamp(6px, 1vh, 16px);
   color: #fff;
-  font-size: clamp(18px, 2vw, 28px);
+  font-size: clamp(16px, 1.3vw + 1.1vh, 32px);
   line-height: 1.1;
   font-weight: 700;
   letter-spacing: 2px;
   white-space: nowrap;
-  text-shadow: 2px 2px 5px #000;
+  text-shadow: 2px 2px 6px #000;
 }
 
 #date {
-  margin-top: 5px;
+  margin-top: clamp(3px, 0.5vh, 8px);
   color: #bdbdbd;
-  font-size: clamp(14px, 1.25vw, 20px);
+  font-size: clamp(13px, 1vw + 0.8vh, 24px);
   line-height: 1.1;
   letter-spacing: 1px;
   white-space: nowrap;
-  text-shadow: 2px 2px 5px #000;
+  text-shadow: 2px 2px 6px #000;
+  font-variant-numeric: tabular-nums;
 }
 
-/* DERS / TENEFFÜS BİLGİSİ */
 #lessonInfo {
   position: fixed;
   left: 50%;
-  bottom: clamp(70px, 9vh, 105px);
+  bottom: clamp(56px, 7vh, 110px);
   transform: translateX(-50%);
-  width: min(90vw, 800px);
+  width: min(92vw, 900px);
   max-width: calc(100vw - 40px);
   text-align: center;
-  color: rgba(255,255,255,0.78);
-  text-shadow: 2px 2px 5px #000;
+  color: rgba(255,255,255,0.8);
+  text-shadow: 2px 2px 6px #000;
   overflow: hidden;
 }
 
@@ -105,91 +104,38 @@ html, body {
 }
 
 #status {
-  font-size: clamp(12px, 0.9vw, 16px);
+  font-size: clamp(13px, 0.85vw + 0.75vh, 24px);
   line-height: 1.2;
   font-weight: 700;
   letter-spacing: 2px;
 }
 
 #lesson {
-  margin-top: 4px;
-  font-size: clamp(14px, 1.1vw, 18px);
+  margin-top: clamp(3px, 0.5vh, 8px);
+  font-size: clamp(15px, 1vw + 0.9vh, 28px);
   line-height: 1.2;
-  font-weight: 400;
+  font-weight: 500;
 }
 
 #remaining {
-  margin-top: 3px;
-  color: rgba(255,255,255,0.58);
-  font-size: clamp(12px, 0.85vw, 15px);
+  margin-top: clamp(2px, 0.4vh, 6px);
+  color: rgba(255,255,255,0.6);
+  font-size: clamp(13px, 0.8vw + 0.65vh, 22px);
   line-height: 1.2;
+  font-variant-numeric: tabular-nums;
 }
 
-/* ALT SAĞ */
 #footer {
   position: fixed;
-  right: 20px !important;
-  bottom: 40px;
+  right: clamp(14px, 2vw, 28px);
+  bottom: clamp(16px, 3vh, 40px);
   color: #fff;
-  font-size: 16px;
+  font-size: clamp(12px, 0.8vw + 0.6vh, 20px);
   line-height: 1.1;
   font-weight: 700;
   white-space: nowrap;
-  text-shadow: 2px 2px 5px #000;
+  text-shadow: 2px 2px 6px #000;
 }
-
-/* KISA EKRANLAR */
-@media (max-height: 700px) {
-  #clock {
-    font-size: 240px;
-  }
-
-  #day {
-    margin-top: 7px;
-    font-size: clamp(17px, 2.5vh, 24px);
-  }
-
-  #date {
-    margin-top: 4px;
-    font-size: clamp(13px, 1.8vh, 18px);
-  }
-
-  #lessonInfo {
-    bottom: 72px;
-  }
-
-  #footer {
-    bottom: 40px;
-  }
-}
-
-/* ÇOK DAR / DÜŞÜK ÇÖZÜNÜRLÜK */
-@media (max-height: 500px) {
-  #clock {
-    font-size: 190px;
-  }
-
-  #day {
-    margin-top: 5px;
-    font-size: 16px;
-  }
-
-  #date {
-    margin-top: 3px;
-    font-size: 13px;
-  }
-
-  #lessonInfo {
-    bottom: 48px;
-  }
-
-  #footer {
-    bottom: 18px;
-    font-size: 13px;
-  }
-}
-
-
 </style>
 </head>
 
@@ -224,7 +170,6 @@ const schedule = {
     ["15:15","15:55","MATEMATİK"],
     ["16:00","16:40","MATEMATİK"]
   ],
-
   2: [
     ["09:00","09:40","ATÖLYE"],
     ["09:50","10:30","ATÖLYE"],
@@ -236,7 +181,6 @@ const schedule = {
     ["15:15","15:55","ATÖLYE"],
     ["16:00","16:40","SANAT EĞİTİMİ"]
   ],
-
   3: [
     ["09:00","09:40","ALMANCA"],
     ["09:50","10:30","ALMANCA"],
@@ -248,7 +192,6 @@ const schedule = {
     ["15:15","15:55","FİZİK"],
     ["16:00","16:40","FELSEFE"]
   ],
-
   4: [
     ["09:00","09:40","MODELLEME VE MONTAJ"],
     ["09:50","10:30","MODELLEME VE MONTAJ"],
@@ -260,7 +203,6 @@ const schedule = {
     ["15:15","15:55","COĞRAFYA"],
     ["16:00","16:40","COĞRAFYA"]
   ],
-
   5: [
     ["09:00","09:40","TARİH"],
     ["09:50","10:30","TARİH"],
@@ -298,7 +240,6 @@ function remainingText(seconds) {
   seconds = Math.max(0, seconds);
   const minutes = Math.floor(seconds / 60);
   const secs = seconds % 60;
-
   return "Kalan " +
     String(minutes).padStart(2,"0") + ":" +
     String(secs).padStart(2,"0");
