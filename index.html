@@ -28,7 +28,7 @@ html, body {
   pointer-events: none;
 }
 
-
+/* SAAT + TARİH: HER EKRANDA TAM ORTA */
 #main {
   position: fixed;
   inset: 0;
@@ -51,7 +51,7 @@ html, body {
 
 #clock {
   color: #fff;
-  font-size: clamp(72px, 18vw, 200px);
+  font-size: clamp(100px, 15vw, 200px);
   line-height: 0.95;
   font-weight: 400;
   letter-spacing: 0;
@@ -80,7 +80,7 @@ html, body {
   text-shadow: 2px 2px 5px #000;
 }
 
-
+/* DERS / TENEFFÜS BİLGİSİ */
 #lessonInfo {
   position: fixed;
   left: 50%;
@@ -125,23 +125,23 @@ html, body {
   line-height: 1.2;
 }
 
-
+/* ALT SAĞ */
 #footer {
   position: fixed;
-  right: clamp(15px, 1.5vw, 25px);
-  bottom: clamp(38px, 5vh, 58px);
+  right: 20px !important;
+  bottom: 40px;
   color: #fff;
-  font-size: clamp(14px, 1vw, 18px);
+  font-size: 16px;
   line-height: 1.1;
   font-weight: 700;
   white-space: nowrap;
   text-shadow: 2px 2px 5px #000;
 }
 
-
+/* KISA EKRANLAR */
 @media (max-height: 700px) {
   #clock {
-    font-size: clamp(68px, 18vh, 145px);
+    font-size: clamp(100px, 30vh, 200px);
   }
 
   #day {
@@ -163,10 +163,10 @@ html, body {
   }
 }
 
-
+/* ÇOK DAR / DÜŞÜK ÇÖZÜNÜRLÜK */
 @media (max-height: 500px) {
   #clock {
-    font-size: clamp(60px, 17vh, 115px);
+    font-size: clamp(80px, 24vh, 160px);
   }
 
   #day {
