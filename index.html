@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Saat + Ders</title>
+<title>Atık Saat By Ömer Taha BATTAL</title>
 
 <style>
 html, body {
@@ -23,8 +23,7 @@ html, body {
   pointer-events: none;
 }
 
-/* ANA SAAT ALANI
-   Logo kaldırıldığı için saat artık doğrudan ekranın merkezinde. */
+
 .container {
   position: absolute;
   left: 50%;
@@ -48,9 +47,7 @@ html, body {
   overflow: hidden;
 }
 
-/* SAAT
-   1920x1080'de yaklaşık eski 200px görünüm korunur.
-   Daha küçük ekranlarda otomatik küçülür. */
+
 #clock {
   font-size: clamp(50px, min(10vw, 18vh), 200px);
   color: white;
@@ -62,7 +59,7 @@ html, body {
   box-sizing: border-box;
 }
 
-/* Tarih - saatin altında */
+
 .date-area {
   margin-top: clamp(6px, 1vh, 10px);
 }
@@ -85,8 +82,7 @@ html, body {
   white-space: nowrap;
 }
 
-/* DERS BİLGİSİ
-   Alt-orta bölgede ve görev çubuğundan güvenli uzaklıkta. */
+
 #lessonInfo {
   position: fixed;
   left: 50%;
@@ -129,7 +125,7 @@ html, body {
   white-space: nowrap;
 }
 
-/* Sağ alt */
+
 #footer {
   position: fixed;
   right: clamp(12px, 1.1vw, 20px);
@@ -143,7 +139,7 @@ html, body {
   white-space: nowrap;
 }
 
-/* Çok dar ekranlar */
+
 @media (max-width: 700px) {
   #lessonInfo {
     width: 94vw;
@@ -156,7 +152,7 @@ html, body {
   }
 }
 
-/* Çok kısa ekranlar */
+
 @media (max-height: 600px) {
   #lessonInfo {
     bottom: 60px;
@@ -190,43 +186,10 @@ html, body {
   <div id="remaining"></div>
 </div>
 
-<div id="footer">10B ÖTB</div>
+<div id="footer">Aso Teknik Koleji "ÖTB"</div>
 
 <script>
-/*
-=========================================================
-10B DERS PROGRAMI
-Her şey bu index.html içindedir.
-Yeni program geldiğinde yalnızca bu bölüm güncellenir.
-=========================================================
-*/
 
-/*
-PDF programına göre:
-
-PAZARTESİ - PERŞEMBE
-1  09:00-09:40
-2  09:50-10:30
-3  10:40-11:20
-4  11:30-12:10
-ÖĞLE ARASI 12:10-12:50
-5  12:50-13:30
-6  13:40-14:20
-7  14:30-15:10
-8  15:15-15:55
-9  16:00-16:40
-
-CUMA
-1  09:00-09:40
-2  09:50-10:30
-3  10:40-11:20
-4  11:30-12:10
-ÖĞLE ARASI 12:10-13:30
-5  13:30-14:10
-6  14:20-15:00
-7  15:10-15:50
-8  15:55-16:35
-*/
 
 const schedule = {
 
@@ -255,8 +218,8 @@ const schedule = {
   3: [
     ["09:00","09:40","ALMANCA"],
     ["09:50","10:30","ALMANCA"],
-    ["10:40","11:20","TÜRK DİLİ VE EDEBİYATI"],
-    ["11:30","12:10","TÜRK DİLİ VE EDEBİYATI"],
+    ["10:40","11:20","EDEBİYAT"],
+    ["11:30","12:10","EDEBİYAT"],
     ["12:50","13:30","SENSÖRLER"],
     ["13:40","14:20","SENSÖRLER"],
     ["14:30","15:10","FİZİK"],
@@ -268,8 +231,8 @@ const schedule = {
     ["09:50","10:30","MODELLEME VE MONTAJ"],
     ["10:40","11:20","MATEMATİK"],
     ["11:30","12:10","ATÖLYE"],
-    ["12:50","13:30","TÜRK DİLİ VE EDEBİYATI"],
-    ["13:40","14:20","TÜRK DİLİ VE EDEBİYATI"],
+    ["12:50","13:30","EDEBİYAT"],
+    ["13:40","14:20","EDEBİYAT"],
     ["14:30","15:10","REHBERLİK VE YÖNLENDİRME"],
     ["15:15","15:55","TÜRK DİLİ VE EDEBİYATI"]
   ],
@@ -281,8 +244,8 @@ const schedule = {
     ["11:30","12:10","ATÖLYE"],
     ["13:30","14:10","TÜRK DÜŞÜNCE TARİHİ"],
     ["14:20","15:00","FELSEFE"],
-    ["15:10","15:50","TÜRK DİLİ VE EDEBİYATI"],
-    ["15:55","16:35","TÜRK DİLİ VE EDEBİYATI"]
+    ["15:10","15:50","EDEBİYAT"],
+    ["15:55","16:35","EDEBİYAT"]
   ]
 };
 
@@ -405,7 +368,7 @@ function updateLesson(now) {
         const nextTotal =
           nextStart * 60;
 
-        /* 4. ders ile 5. ders arasındaki uzun ara */
+        
         if (i === 3) {
           status.textContent = "ÖĞLE ARASI";
         } else {
@@ -439,7 +402,7 @@ update();
 setInterval(update, 1000);
 
 
-/* Sağ tık / seçim / sürükleme / kopyalama engeli */
+
 document.addEventListener("contextmenu", e => e.preventDefault(), true);
 document.addEventListener("selectstart", e => e.preventDefault(), true);
 document.addEventListener("dragstart", e => e.preventDefault(), true);
