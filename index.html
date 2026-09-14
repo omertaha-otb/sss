@@ -1,165 +1,191 @@
 <!DOCTYPE html>
-<html>
+<html lang="tr">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Atık Saat By Ömer Taha BATTAL</title>
 
 <style>
+* {
+  box-sizing: border-box;
+}
+
 html, body {
   margin: 0;
   padding: 0;
   width: 100%;
   height: 100%;
+  min-width: 0;
+  min-height: 0;
   overflow: hidden;
-  background: black;
+  background: #000;
   font-family: Arial, sans-serif;
-  position: relative;
 
   user-select: none;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
-
   pointer-events: none;
 }
 
-
-.container {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-
+/* SAAT + TARİH: HER EKRANDA TAM ORTA */
+#main {
+  position: fixed;
+  inset: 0;
   width: 100%;
-  max-width: 100vw;
-  box-sizing: border-box;
-
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
-}
-
-.clock-area {
-  width: 100%;
-  max-width: 100vw;
-  box-sizing: border-box;
   overflow: hidden;
 }
 
-
-#clock {
-  font-size: clamp(50px, min(10vw, 18vh), 200px);
-  color: white;
-  text-shadow: 3px 3px 10px black;
-  line-height: 1;
-  font-weight: normal;
-  white-space: nowrap;
+#clockArea {
+  width: 100%;
   max-width: 100%;
-  box-sizing: border-box;
+  padding: 0 20px;
+  text-align: center;
+  overflow: hidden;
 }
 
-
-.date-area {
-  margin-top: clamp(6px, 1vh, 10px);
+#clock {
+  color: #fff;
+  font-size: clamp(72px, 18vw, 200px);
+  line-height: 0.95;
+  font-weight: 400;
+  letter-spacing: 0;
+  white-space: nowrap;
+  text-shadow: 3px 3px 10px #000;
 }
 
 #day {
-  color: white;
-  font-size: clamp(15px, 1.2vw, 23px);
-  font-weight: bold;
-  letter-spacing: clamp(1px, 0.15vw, 3px);
-  text-shadow: 2px 2px 5px black;
+  margin-top: 10px;
+  color: #fff;
+  font-size: clamp(18px, 2vw, 28px);
+  line-height: 1.1;
+  font-weight: 700;
+  letter-spacing: 2px;
   white-space: nowrap;
+  text-shadow: 2px 2px 5px #000;
 }
 
 #date {
-  margin-top: 3px;
+  margin-top: 5px;
   color: #bdbdbd;
-  font-size: clamp(12px, 0.9vw, 17px);
-  letter-spacing: clamp(1px, 0.1vw, 2px);
-  text-shadow: 2px 2px 5px black;
+  font-size: clamp(14px, 1.25vw, 20px);
+  line-height: 1.1;
+  letter-spacing: 1px;
   white-space: nowrap;
+  text-shadow: 2px 2px 5px #000;
 }
 
-
+/* DERS / TENEFFÜS BİLGİSİ */
 #lessonInfo {
   position: fixed;
   left: 50%;
-  bottom: clamp(75px, 10vh, 115px);
+  bottom: clamp(70px, 9vh, 105px);
   transform: translateX(-50%);
-
-  width: min(90vw, 700px);
-  box-sizing: border-box;
-
+  width: min(90vw, 800px);
+  max-width: calc(100vw - 40px);
   text-align: center;
-  color: rgba(255,255,255,0.72);
-
-  font-family: Arial, sans-serif;
-  text-shadow: 2px 2px 5px black;
-
+  color: rgba(255,255,255,0.78);
+  text-shadow: 2px 2px 5px #000;
   overflow: hidden;
 }
 
-#status {
-  font-size: clamp(11px, 0.65vw, 13px);
-  font-weight: bold;
-  letter-spacing: 2px;
-  white-space: nowrap;
-}
-
-#lesson {
-  margin-top: 3px;
-  font-size: clamp(13px, 0.85vw, 16px);
-  font-weight: normal;
-
+#status,
+#lesson,
+#remaining {
+  display: block;
+  width: 100%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-#remaining {
-  margin-top: 2px;
-  font-size: clamp(11px, 0.7vw, 13px);
-  color: rgba(255,255,255,0.55);
-  white-space: nowrap;
+#status {
+  font-size: clamp(12px, 0.9vw, 16px);
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: 2px;
 }
 
+#lesson {
+  margin-top: 4px;
+  font-size: clamp(14px, 1.1vw, 18px);
+  line-height: 1.2;
+  font-weight: 400;
+}
 
+#remaining {
+  margin-top: 3px;
+  color: rgba(255,255,255,0.58);
+  font-size: clamp(12px, 0.85vw, 15px);
+  line-height: 1.2;
+}
+
+/* ALT SAĞ */
 #footer {
   position: fixed;
-  right: clamp(12px, 1.1vw, 20px);
-  bottom: clamp(50px, 5.5vh, 60px);
-
-  color: white;
-  font-size: clamp(13px, 0.85vw, 16px);
-  font-weight: bold;
-  text-shadow: 2px 2px 5px black;
-
+  right: clamp(15px, 1.5vw, 25px);
+  bottom: clamp(38px, 5vh, 58px);
+  color: #fff;
+  font-size: clamp(14px, 1vw, 18px);
+  line-height: 1.1;
+  font-weight: 700;
   white-space: nowrap;
+  text-shadow: 2px 2px 5px #000;
 }
 
+/* KISA EKRANLAR */
+@media (max-height: 700px) {
+  #clock {
+    font-size: clamp(68px, 18vh, 145px);
+  }
 
-@media (max-width: 700px) {
+  #day {
+    margin-top: 7px;
+    font-size: clamp(17px, 2.5vh, 24px);
+  }
+
+  #date {
+    margin-top: 4px;
+    font-size: clamp(13px, 1.8vh, 18px);
+  }
+
   #lessonInfo {
-    width: 94vw;
-    bottom: 75px;
+    bottom: 72px;
   }
 
   #footer {
-    right: 12px;
-    bottom: 50px;
+    bottom: 40px;
   }
 }
 
+/* ÇOK DAR / DÜŞÜK ÇÖZÜNÜRLÜK */
+@media (max-height: 500px) {
+  #clock {
+    font-size: clamp(60px, 17vh, 115px);
+  }
 
-@media (max-height: 600px) {
+  #day {
+    margin-top: 5px;
+    font-size: 16px;
+  }
+
+  #date {
+    margin-top: 3px;
+    font-size: 13px;
+  }
+
   #lessonInfo {
-    bottom: 60px;
+    bottom: 48px;
   }
 
   #footer {
-    bottom: 35px;
+    bottom: 18px;
+    font-size: 13px;
   }
 }
 </style>
@@ -167,16 +193,11 @@ html, body {
 
 <body>
 
-<div class="container">
-  <div class="clock-area">
-
+<div id="main">
+  <div id="clockArea">
     <div id="clock"></div>
-
-    <div class="date-area">
-      <div id="day"></div>
-      <div id="date"></div>
-    </div>
-
+    <div id="day"></div>
+    <div id="date"></div>
   </div>
 </div>
 
@@ -189,10 +210,7 @@ html, body {
 <div id="footer">Aso Teknik Koleji "ÖTB"</div>
 
 <script>
-
-
 const schedule = {
-
   1: [
     ["09:00","09:40","İNGİLİZCE"],
     ["09:50","10:30","İNGİLİZCE"],
@@ -200,8 +218,9 @@ const schedule = {
     ["11:30","12:10","BEDEN EĞİTİMİ"],
     ["12:50","13:30","DİN KÜLTÜRÜ"],
     ["13:40","14:20","KİMYA"],
-    ["14:30","15:10","MATEMATİK"],
-    ["15:15","15:55","MATEMATİK"]
+    ["14:30","15:10","KİMYA"],
+    ["15:15","15:55","MATEMATİK"],
+    ["16:00","16:40","MATEMATİK"]
   ],
 
   2: [
@@ -212,29 +231,32 @@ const schedule = {
     ["12:50","13:30","ATÖLYE"],
     ["13:40","14:20","ATÖLYE"],
     ["14:30","15:10","ATÖLYE"],
-    ["15:15","15:55","SANAT EĞİTİMİ"]
+    ["15:15","15:55","ATÖLYE"],
+    ["16:00","16:40","SANAT EĞİTİMİ"]
   ],
 
   3: [
     ["09:00","09:40","ALMANCA"],
     ["09:50","10:30","ALMANCA"],
-    ["10:40","11:20","EDEBİYAT"],
-    ["11:30","12:10","EDEBİYAT"],
+    ["10:40","11:20","TÜRK DİLİ VE EDEBİYATI"],
+    ["11:30","12:10","TÜRK DİLİ VE EDEBİYATI"],
     ["12:50","13:30","SENSÖRLER"],
     ["13:40","14:20","SENSÖRLER"],
     ["14:30","15:10","FİZİK"],
-    ["15:15","15:55","FİZİK"]
+    ["15:15","15:55","FİZİK"],
+    ["16:00","16:40","FELSEFE"]
   ],
 
   4: [
     ["09:00","09:40","MODELLEME VE MONTAJ"],
     ["09:50","10:30","MODELLEME VE MONTAJ"],
-    ["10:40","11:20","MATEMATİK"],
-    ["11:30","12:10","ATÖLYE"],
-    ["12:50","13:30","EDEBİYAT"],
-    ["13:40","14:20","EDEBİYAT"],
-    ["14:30","15:10","REHBERLİK VE YÖNLENDİRME"],
-    ["15:15","15:55","TÜRK DİLİ VE EDEBİYATI"]
+    ["10:40","11:20","BİYOLOJİ"],
+    ["11:30","12:10","BİYOLOJİ"],
+    ["12:50","13:30","MATEMATİK"],
+    ["13:40","14:20","MATEMATİK"],
+    ["14:30","15:10","DİN KÜLTÜRÜ"],
+    ["15:15","15:55","COĞRAFYA"],
+    ["16:00","16:40","COĞRAFYA"]
   ],
 
   5: [
@@ -244,8 +266,9 @@ const schedule = {
     ["11:30","12:10","ATÖLYE"],
     ["13:30","14:10","TÜRK DÜŞÜNCE TARİHİ"],
     ["14:20","15:00","FELSEFE"],
-    ["15:10","15:50","EDEBİYAT"],
-    ["15:55","16:35","EDEBİYAT"]
+    ["15:10","15:50","TÜRK DİLİ VE EDEBİYATI"],
+    ["15:55","16:35","TÜRK DİLİ VE EDEBİYATI"],
+    ["16:35","16:35","REHBERLİK VE YÖNLENDİRME"]
   ]
 };
 
@@ -271,42 +294,32 @@ function toMinutes(value) {
 
 function remainingText(seconds) {
   seconds = Math.max(0, seconds);
-
   const minutes = Math.floor(seconds / 60);
   const secs = seconds % 60;
 
   return "Kalan " +
-    String(minutes).padStart(2, "0") +
-    ":" +
-    String(secs).padStart(2, "0");
+    String(minutes).padStart(2,"0") + ":" +
+    String(secs).padStart(2,"0");
 }
 
 function updateClockAndDate(now) {
-
   const h = String(now.getHours()).padStart(2,"0");
   const m = String(now.getMinutes()).padStart(2,"0");
   const s = String(now.getSeconds()).padStart(2,"0");
 
-  document.getElementById("clock").textContent =
-    h + ":" + m + ":" + s;
-
-  document.getElementById("day").textContent =
-    days[now.getDay()];
+  document.getElementById("clock").textContent = h + ":" + m + ":" + s;
+  document.getElementById("day").textContent = days[now.getDay()];
 
   document.getElementById("date").textContent =
-    String(now.getDate()).padStart(2,"0") +
-    " " +
-    months[now.getMonth()] +
-    " " +
+    String(now.getDate()).padStart(2,"0") + " " +
+    months[now.getMonth()] + " " +
     now.getFullYear();
 }
 
 function updateLesson(now) {
-
   const status = document.getElementById("status");
   const lesson = document.getElementById("lesson");
   const remaining = document.getElementById("remaining");
-
   const day = now.getDay();
 
   if (!schedule[day]) {
@@ -316,71 +329,35 @@ function updateLesson(now) {
     return;
   }
 
-  const currentMinutes =
-    now.getHours() * 60 + now.getMinutes();
-
-  const currentSeconds =
-    now.getSeconds();
-
+  const currentMinutes = now.getHours() * 60 + now.getMinutes();
+  const currentSeconds = now.getSeconds();
   const lessons = schedule[day];
 
   for (let i = 0; i < lessons.length; i++) {
-
     const start = toMinutes(lessons[i][0]);
     const end = toMinutes(lessons[i][1]);
     const name = lessons[i][2];
 
-    if (
-      currentMinutes >= start &&
-      currentMinutes < end
-    ) {
+    if (currentMinutes >= start && currentMinutes < end) {
+      const nowTotal = currentMinutes * 60 + currentSeconds;
+      const endTotal = end * 60;
 
-      const nowTotal =
-        currentMinutes * 60 + currentSeconds;
-
-      const endTotal =
-        end * 60;
-
-      status.textContent =
-        (i + 1) + ". DERS";
-
+      status.textContent = (i + 1) + ". DERS";
       lesson.textContent = name;
-
-      remaining.textContent =
-        remainingText(endTotal - nowTotal);
-
+      remaining.textContent = remainingText(endTotal - nowTotal);
       return;
     }
 
     if (i < lessons.length - 1) {
+      const nextStart = toMinutes(lessons[i + 1][0]);
 
-      const nextStart =
-        toMinutes(lessons[i + 1][0]);
+      if (currentMinutes >= end && currentMinutes < nextStart) {
+        const nowTotal = currentMinutes * 60 + currentSeconds;
+        const nextTotal = nextStart * 60;
 
-      if (
-        currentMinutes >= end &&
-        currentMinutes < nextStart
-      ) {
-
-        const nowTotal =
-          currentMinutes * 60 + currentSeconds;
-
-        const nextTotal =
-          nextStart * 60;
-
-        
-        if (i === 3) {
-          status.textContent = "ÖĞLE ARASI";
-        } else {
-          status.textContent = "TENEFFÜS";
-        }
-
-        lesson.textContent =
-          "Sonraki: " + lessons[i + 1][2];
-
-        remaining.textContent =
-          remainingText(nextTotal - nowTotal);
-
+        status.textContent = (i === 3) ? "ÖĞLE ARASI" : "TENEFFÜS";
+        lesson.textContent = "Sonraki: " + lessons[i + 1][2];
+        remaining.textContent = remainingText(nextTotal - nowTotal);
         return;
       }
     }
@@ -393,15 +370,12 @@ function updateLesson(now) {
 
 function update() {
   const now = new Date();
-
   updateClockAndDate(now);
   updateLesson(now);
 }
 
 update();
 setInterval(update, 1000);
-
-
 
 document.addEventListener("contextmenu", e => e.preventDefault(), true);
 document.addEventListener("selectstart", e => e.preventDefault(), true);
