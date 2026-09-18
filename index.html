@@ -444,6 +444,33 @@ function updateLesson(now) {
     return;
   }
 
+  /* PAZARTESİ-PERŞEMBE ÖĞLE ARASI */
+
+  if (
+    day >= 1 &&
+    day <= 4 &&
+    currentMinutes >= 12 * 60 + 10 &&
+    currentMinutes < 12 * 60 + 50
+  ) {
+
+    const nowTotal =
+      currentMinutes * 60 +
+      currentSeconds;
+
+    const lunchEnd =
+      (12 * 60 + 50) * 60;
+
+    setLessonInfo(
+      "ÖĞLE ARASI",
+      "Afiyet Olsun",
+      "",
+      remainingText(lunchEnd - nowTotal),
+      "ogle-arasi-" + day
+    );
+
+    return;
+  }
+
   /* DERSLER */
 
   for (let i = 0; i < lessons.length; i++) {
@@ -515,33 +542,6 @@ function updateLesson(now) {
         return;
       }
     }
-  }
-
-  /* PAZARTESİ-PERŞEMBE ÖĞLE ARASI */
-
-  if (
-    day >= 1 &&
-    day <= 4 &&
-    currentMinutes >= 12 * 60 + 10 &&
-    currentMinutes < 12 * 60 + 50
-  ) {
-
-    const nowTotal =
-      currentMinutes * 60 +
-      currentSeconds;
-
-    const lunchEnd =
-      (12 * 60 + 50) * 60;
-
-    setLessonInfo(
-      "ÖĞLE ARASI",
-      "Afiyet Olsun",
-      "",
-      remainingText(lunchEnd - nowTotal),
-      "ogle-arasi-" + day
-    );
-
-    return;
   }
 
   /* OKUL DIŞI */
