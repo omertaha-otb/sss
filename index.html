@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -93,8 +94,28 @@ html, body {
   overflow: hidden;
 }
 
+/*
+  Ders değişiminde yalnızca ders bilgi alanı
+  yaklaşık 300 ms boyunca hafifçe görünürlük değiştirir.
+  Saat ve tarih bu animasyona dahil değildir.
+*/
+#lessonInfo.lesson-change {
+  animation: lessonFade 300ms ease;
+}
+
+@keyframes lessonFade {
+  0% {
+    opacity: 0.35;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
 #status,
 #lesson,
+#teacher,
 #remaining {
   display: block;
   width: 100%;
@@ -115,6 +136,14 @@ html, body {
   font-size: clamp(15px, 1vw + 0.9vh, 28px);
   line-height: 1.2;
   font-weight: 500;
+}
+
+#teacher {
+  margin-top: clamp(2px, 0.35vh, 5px);
+  color: rgba(255,255,255,0.55);
+  font-size: clamp(11px, 0.65vw + 0.55vh, 18px);
+  line-height: 1.15;
+  font-weight: 400;
 }
 
 #remaining {
@@ -152,69 +181,180 @@ html, body {
 <div id="lessonInfo">
   <div id="status">OKUL DIŞI</div>
   <div id="lesson"></div>
+  <div id="teacher"></div>
   <div id="remaining"></div>
 </div>
 
-<div id="footer">Aso Teknik Koleji "ÖTB"</div>
+<div id="footer">Aso Teknik Koleji • ÖTB</div>
 
 <script>
+/*
+  ATIK SAAT
+  Aso Teknik Koleji
+
+  DERS SAATLERİ
+
+  Pazartesi-Perşembe:
+  1. 09:00-09:40
+  2. 09:50-10:30
+  3. 10:40-11:20
+  4. 11:30-12:10
+  5. 12:50-13:30
+  6. 13:35-14:15
+  7. 14:20-15:00
+  8. 15:05-15:45
+  9. 15:50-16:30
+
+  Cuma:
+  1. 09:00-09:40
+  2. 09:50-10:30
+  3. 10:40-11:20
+  4. 11:30-12:10
+  5. 12:15-12:55
+  ÖĞLE ARASI 12:55-13:30
+  6. 13:30-14:10
+  7. 14:20-15:00
+  8. 15:05-15:45
+  9. 15:50-16:30
+*/
+
+
+/* =========================================================
+   DERS PROGRAMI
+   ========================================================= */
+
 const schedule = {
+
+  /* PAZARTESİ */
   1: [
     ["09:00","09:40","İNGİLİZCE"],
     ["09:50","10:30","İNGİLİZCE"],
     ["10:40","11:20","BEDEN EĞİTİMİ"],
     ["11:30","12:10","BEDEN EĞİTİMİ"],
     ["12:50","13:30","DİN KÜLTÜRÜ"],
-    ["13:40","14:20","KİMYA"],
-    ["14:30","15:10","KİMYA"],
-    ["15:15","15:55","MATEMATİK"],
-    ["16:00","16:40","MATEMATİK"]
+    ["13:35","14:15","ALMANCA"],
+    ["14:20","15:00","ALMANCA"],
+    ["15:05","15:45","MATEMATİK"],
+    ["15:50","16:30","MATEMATİK"]
   ],
+
+  /* SALI */
   2: [
     ["09:00","09:40","ATÖLYE"],
     ["09:50","10:30","ATÖLYE"],
     ["10:40","11:20","ATÖLYE"],
     ["11:30","12:10","ATÖLYE"],
     ["12:50","13:30","ATÖLYE"],
-    ["13:40","14:20","ATÖLYE"],
-    ["14:30","15:10","ATÖLYE"],
-    ["15:15","15:55","ATÖLYE"],
-    ["16:00","16:40","SANAT EĞİTİMİ"]
+    ["13:35","14:15","ATÖLYE"],
+    ["14:20","15:00","ATÖLYE"],
+    ["15:05","15:45","ATÖLYE"],
+    ["15:50","16:30","SANAT EĞİTİMİ"]
   ],
+
+  /* ÇARŞAMBA */
   3: [
-    ["09:00","09:40","ALMANCA"],
-    ["09:50","10:30","ALMANCA"],
-    ["10:40","11:20","TÜRK DİLİ VE EDEBİYATI"],
-    ["11:30","12:10","TÜRK DİLİ VE EDEBİYATI"],
+    ["09:00","09:40","KİMYA"],
+    ["09:50","10:30","KİMYA"],
+    ["10:40","11:20","EDEBİYAT"],
+    ["11:30","12:10","EDEBİYAT"],
     ["12:50","13:30","SENSÖRLER"],
-    ["13:40","14:20","SENSÖRLER"],
-    ["14:30","15:10","FİZİK"],
-    ["15:15","15:55","FİZİK"],
-    ["16:00","16:40","FELSEFE"]
+    ["13:35","14:15","SENSÖRLER"],
+    ["14:20","15:00","FİZİK"],
+    ["15:05","15:45","FİZİK"],
+    ["15:50","16:30","FELSEFE"]
   ],
+
+  /* PERŞEMBE */
   4: [
     ["09:00","09:40","MODELLEME VE MONTAJ"],
     ["09:50","10:30","MODELLEME VE MONTAJ"],
     ["10:40","11:20","BİYOLOJİ"],
     ["11:30","12:10","BİYOLOJİ"],
     ["12:50","13:30","MATEMATİK"],
-    ["13:40","14:20","MATEMATİK"],
-    ["14:30","15:10","DİN KÜLTÜRÜ"],
-    ["15:15","15:55","COĞRAFYA"],
-    ["16:00","16:40","COĞRAFYA"]
+    ["13:35","14:15","MATEMATİK"],
+    ["14:20","15:00","DİN KÜLTÜRÜ"],
+    ["15:05","15:45","COĞRAFYA"],
+    ["15:50","16:30","COĞRAFYA"]
   ],
+
+  /* CUMA */
   5: [
     ["09:00","09:40","TARİH"],
     ["09:50","10:30","TARİH"],
     ["10:40","11:20","MATEMATİK"],
-    ["11:30","12:10","ATÖLYE"],
-    ["13:30","14:10","TÜRK DÜŞÜNCE TARİHİ"],
-    ["14:20","15:00","FELSEFE"],
-    ["15:10","15:50","TÜRK DİLİ VE EDEBİYATI"],
-    ["15:55","16:35","TÜRK DİLİ VE EDEBİYATI"],
-    ["16:35","16:35","REHBERLİK VE YÖNLENDİRME"]
+    ["11:30","12:10","İNGİLİZCE"],
+    ["12:15","12:55","İNGİLİZCE"],
+    ["13:30","14:10","FELSEFE"],
+    ["14:20","15:00","EDEBİYAT"],
+    ["15:05","15:45","EDEBİYAT"],
+    ["15:50","16:30","REHBERLİK VE YÖNLENDİRME"]
   ]
 };
+
+
+/* =========================================================
+   ÖĞRETMEN BİLGİLERİ
+   PDF'DEKİ DERS KODLARI VE ÖĞRETMENLER ESAS ALINMIŞTIR.
+   ========================================================= */
+
+const teachers = {
+
+  "İNGİLİZCE":
+    "Gülçin Coşkun",
+
+  "BEDEN EĞİTİMİ":
+    "Ertuğ Tarhan",
+
+  "DİN KÜLTÜRÜ":
+    "Mücahit Bulut",
+
+  "ALMANCA":
+    "Ayşe Kıymaz"
+
+  "MATEMATİK":
+    "Volkan Öztürk",
+
+  "ATÖLYE":
+    "İdris Kahriman / Recep Çetin",
+
+  "SANAT EĞİTİMİ":
+    "Emre Ağaçtan / Süleyman Altıntaş",
+
+  "KİMYA":
+    "Murat Kobalas",
+
+  "EDEBİYAT":
+    "Elçin Manco Çınar",
+
+  "SENSÖRLER":
+    "İnan Şahin / Recep Çetin",
+
+  "FİZİK":
+    "Özgür Yayla",
+
+  "FELSEFE":
+    "Aysun Özdemir",
+
+  "MODELLEME VE MONTAJ":
+    "Ahmet Tolunay Işık",
+
+  "BİYOLOJİ":
+    "Neslihan Kurt",
+
+  "COĞRAFYA":
+    "Halil İbrahim Yaman",
+
+  "TARİH":
+    "Kubilay Özyurt",
+
+  "REHBERLİK VE YÖNLENDİRME":
+    "Volkan Öztürk"
+};
+
+
+/* =========================================================
+   GÜNLER / AYLAR
+   ========================================================= */
 
 const days = [
   "PAZAR",
@@ -227,105 +367,375 @@ const days = [
 ];
 
 const months = [
-  "OCAK","ŞUBAT","MART","NİSAN","MAYIS","HAZİRAN",
-  "TEMMUZ","AĞUSTOS","EYLÜL","EKİM","KASIM","ARALIK"
+  "OCAK",
+  "ŞUBAT",
+  "MART",
+  "NİSAN",
+  "MAYIS",
+  "HAZİRAN",
+  "TEMMUZ",
+  "AĞUSTOS",
+  "EYLÜL",
+  "EKİM",
+  "KASIM",
+  "ARALIK"
 ];
+
+
+/* =========================================================
+   YARDIMCI FONKSİYONLAR
+   ========================================================= */
 
 function toMinutes(value) {
   const parts = value.split(":");
-  return Number(parts[0]) * 60 + Number(parts[1]);
+
+  return Number(parts[0]) * 60 +
+         Number(parts[1]);
 }
 
+
 function remainingText(seconds) {
+
   seconds = Math.max(0, seconds);
+
   const minutes = Math.floor(seconds / 60);
   const secs = seconds % 60;
+
   return "Kalan " +
-    String(minutes).padStart(2,"0") + ":" +
+    String(minutes).padStart(2,"0") +
+    ":" +
     String(secs).padStart(2,"0");
 }
 
+
+/* =========================================================
+   SAAT / TARİH
+   ========================================================= */
+
 function updateClockAndDate(now) {
+
   const h = String(now.getHours()).padStart(2,"0");
   const m = String(now.getMinutes()).padStart(2,"0");
   const s = String(now.getSeconds()).padStart(2,"0");
 
-  document.getElementById("clock").textContent = h + ":" + m + ":" + s;
-  document.getElementById("day").textContent = days[now.getDay()];
+  document.getElementById("clock").textContent =
+    h + ":" + m + ":" + s;
+
+  document.getElementById("day").textContent =
+    days[now.getDay()];
 
   document.getElementById("date").textContent =
-    String(now.getDate()).padStart(2,"0") + " " +
-    months[now.getMonth()] + " " +
+    String(now.getDate()).padStart(2,"0") +
+    " " +
+    months[now.getMonth()] +
+    " " +
     now.getFullYear();
 }
 
-function updateLesson(now) {
+
+/* =========================================================
+   DERS BİLGİSİ
+   ========================================================= */
+
+let previousLessonState = "";
+
+
+function setLessonInfo(statusText, lessonText, teacherText, remainingTextValue, stateKey) {
+
   const status = document.getElementById("status");
   const lesson = document.getElementById("lesson");
+  const teacher = document.getElementById("teacher");
   const remaining = document.getElementById("remaining");
+  const lessonInfo = document.getElementById("lessonInfo");
+
+  /*
+    Animasyon yalnızca gerçek durum değişiminde çalışır.
+    Kalan süre her saniye değiştiği için animasyonu tetiklemez.
+  */
+
+  if (stateKey !== previousLessonState) {
+
+    lessonInfo.classList.remove("lesson-change");
+
+    /*
+      Tarayıcıya yeni animasyonu başlatması için
+      küçük bir reflow verilir.
+    */
+    void lessonInfo.offsetWidth;
+
+    lessonInfo.classList.add("lesson-change");
+
+    previousLessonState = stateKey;
+  }
+
+  status.textContent = statusText;
+  lesson.textContent = lessonText;
+  teacher.textContent = teacherText;
+  remaining.textContent = remainingTextValue;
+}
+
+
+/* =========================================================
+   DERS PROGRAMINI GÜNCELLE
+   ========================================================= */
+
+function updateLesson(now) {
+
   const day = now.getDay();
 
+  const currentMinutes =
+    now.getHours() * 60 +
+    now.getMinutes();
+
+  const currentSeconds =
+    now.getSeconds();
+
+
+  /*
+    CUMARTESİ / PAZAR
+    =====================================================
+  */
+
   if (!schedule[day]) {
-    status.textContent = "OKUL DIŞI";
-    lesson.textContent = "";
-    remaining.textContent = "";
+
+    setLessonInfo(
+      "OKUL DIŞI",
+      "",
+      "",
+      "",
+      "okul-disi-" + day
+    );
+
     return;
   }
 
-  const currentMinutes = now.getHours() * 60 + now.getMinutes();
-  const currentSeconds = now.getSeconds();
+
   const lessons = schedule[day];
 
+
+  /*
+    CUMA ÖĞLE ARASI
+    12:55 - 13:30
+    =====================================================
+  */
+
+  if (
+    day === 5 &&
+    currentMinutes >= 12 * 60 + 55 &&
+    currentMinutes < 13 * 60 + 30
+  ) {
+
+    const nowTotal =
+      currentMinutes * 60 +
+      currentSeconds;
+
+    const lunchEnd =
+      (13 * 60 + 30) * 60;
+
+    setLessonInfo(
+      "ÖĞLE ARASI",
+      "",
+      "",
+      remainingText(lunchEnd - nowTotal),
+      "cuma-ogle-arasi"
+    );
+
+    return;
+  }
+
+
+  /*
+    DERSLER
+    =====================================================
+  */
+
   for (let i = 0; i < lessons.length; i++) {
-    const start = toMinutes(lessons[i][0]);
-    const end = toMinutes(lessons[i][1]);
-    const name = lessons[i][2];
 
-    if (currentMinutes >= start && currentMinutes < end) {
-      const nowTotal = currentMinutes * 60 + currentSeconds;
-      const endTotal = end * 60;
+    const start =
+      toMinutes(lessons[i][0]);
 
-      status.textContent = (i + 1) + ". DERS";
-      lesson.textContent = name;
-      remaining.textContent = remainingText(endTotal - nowTotal);
+    const end =
+      toMinutes(lessons[i][1]);
+
+    const name =
+      lessons[i][2];
+
+
+    /*
+      AKTİF DERS
+    */
+
+    if (
+      currentMinutes >= start &&
+      currentMinutes < end
+    ) {
+
+      const nowTotal =
+        currentMinutes * 60 +
+        currentSeconds;
+
+      const endTotal =
+        end * 60;
+
+      const teacherName =
+        teachers[name] || "";
+
+      setLessonInfo(
+        (i + 1) + ". DERS",
+        name,
+        teacherName,
+        remainingText(endTotal - nowTotal),
+        "ders-" + day + "-" + i
+      );
+
       return;
     }
 
+
+    /*
+      DERS SONRASI TENEFFÜS
+    */
+
     if (i < lessons.length - 1) {
-      const nextStart = toMinutes(lessons[i + 1][0]);
 
-      if (currentMinutes >= end && currentMinutes < nextStart) {
-        const nowTotal = currentMinutes * 60 + currentSeconds;
-        const nextTotal = nextStart * 60;
+      const nextStart =
+        toMinutes(lessons[i + 1][0]);
 
-        status.textContent = (i === 3) ? "ÖĞLE ARASI" : "TENEFFÜS";
-        lesson.textContent = "Sonraki: " + lessons[i + 1][2];
-        remaining.textContent = remainingText(nextTotal - nowTotal);
+
+      if (
+        currentMinutes >= end &&
+        currentMinutes < nextStart
+      ) {
+
+        const nowTotal =
+          currentMinutes * 60 +
+          currentSeconds;
+
+        const nextTotal =
+          nextStart * 60;
+
+
+        /*
+          CUMA:
+          12:10 - 12:15 kısa teneffüs.
+          12:55 - 13:30 ise yukarıda
+          özel olarak ÖĞLE ARASI yapılmıştır.
+        */
+
+        setLessonInfo(
+          "TENEFFÜS",
+          "Sonraki: " + lessons[i + 1][2],
+          "",
+          remainingText(nextTotal - nowTotal),
+          "teneffus-" + day + "-" + i
+        );
+
         return;
       }
     }
   }
 
-  status.textContent = "OKUL DIŞI";
-  lesson.textContent = "";
-  remaining.textContent = "";
+
+  /*
+    PAZARTESİ-PERŞEMBE ÖĞLE ARASI
+    12:10 - 12:50
+    =====================================================
+  */
+
+  if (
+    day >= 1 &&
+    day <= 4 &&
+    currentMinutes >= 12 * 60 + 10 &&
+    currentMinutes < 12 * 60 + 50
+  ) {
+
+    const nowTotal =
+      currentMinutes * 60 +
+      currentSeconds;
+
+    const lunchEnd =
+      (12 * 60 + 50) * 60;
+
+    setLessonInfo(
+      "ÖĞLE ARASI",
+      "",
+      "",
+      remainingText(lunchEnd - nowTotal),
+      "ogle-arasi-" + day
+    );
+
+    return;
+  }
+
+
+  /*
+    OKUL DIŞI
+    =====================================================
+  */
+
+  setLessonInfo(
+    "OKUL DIŞI",
+    "",
+    "",
+    "",
+    "okul-disi-" + day
+  );
 }
 
+
+/* =========================================================
+   ANA GÜNCELLEME
+   ========================================================= */
+
 function update() {
+
   const now = new Date();
+
   updateClockAndDate(now);
   updateLesson(now);
 }
 
+
 update();
+
 setInterval(update, 1000);
 
-document.addEventListener("contextmenu", e => e.preventDefault(), true);
-document.addEventListener("selectstart", e => e.preventDefault(), true);
-document.addEventListener("dragstart", e => e.preventDefault(), true);
-document.addEventListener("copy", e => e.preventDefault(), true);
-document.addEventListener("cut", e => e.preventDefault(), true);
+
+/* =========================================================
+   ETKİLEŞİMİ ENGELLE
+   ========================================================= */
+
+document.addEventListener(
+  "contextmenu",
+  e => e.preventDefault(),
+  true
+);
+
+document.addEventListener(
+  "selectstart",
+  e => e.preventDefault(),
+  true
+);
+
+document.addEventListener(
+  "dragstart",
+  e => e.preventDefault(),
+  true
+);
+
+document.addEventListener(
+  "copy",
+  e => e.preventDefault(),
+  true
+);
+
+document.addEventListener(
+  "cut",
+  e => e.preventDefault(),
+  true
+);
 </script>
 
 </body>
 </html>
+```
