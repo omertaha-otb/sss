@@ -231,8 +231,8 @@ const schedule = {
     ["09:50","10:30","TARİH"],
     ["10:40","11:20","MATEMATİK"],
     ["11:30","12:10","İNGİLİZCE"],
-    ["12:15","12:55","İNGİLİZCE"],
-    ["13:30","14:10","FELSEFE"],
+    ["12:15","12:50","İNGİLİZCE"],
+    ["13:35","14:15","FELSEFE"],
     ["14:20","15:00","EDEBİYAT"],
     ["15:05","15:45","EDEBİYAT"],
     ["15:50","16:30","REHBERLİK VE YÖNLENDİRME"]
@@ -242,7 +242,7 @@ const schedule = {
 const teachers = {
 
   "İNGİLİZCE":
-    "Gülçin Coşkun",
+    "Gülçin Coşkun Uysal",
 
   "BEDEN EĞİTİMİ":
     "Ertuğ Tarhan",
@@ -422,8 +422,8 @@ function updateLesson(now) {
 
   if (
     day === 5 &&
-    currentMinutes >= 12 * 60 + 55 &&
-    currentMinutes < 13 * 60 + 30
+    currentMinutes >= 12 * 60 + 50 &&
+    currentMinutes < 13 * 60 + 35
   ) {
 
     const nowTotal =
@@ -431,7 +431,7 @@ function updateLesson(now) {
       currentSeconds;
 
     const lunchEnd =
-      (13 * 60 + 30) * 60;
+      (13 * 60 + 35) * 60;
 
     setLessonInfo(
       "ÖĞLE ARASI",
